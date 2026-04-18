@@ -1,0 +1,68 @@
+# ─────────────────────────────────────────────────────────────
+# .dockerignore — raíz del repositorio
+# Aplica cuando se construye una imagen Docker usando este
+# directorio como build context.
+# ─────────────────────────────────────────────────────────────
+
+# Control de versiones
+.git/
+.gitignore
+
+# GitHub / Copilot
+.github/
+
+# Documentación y assets del repo (no necesarios en imágenes)
+README.md
+README_EN.md
+assets/
+docs/
+
+# Entornos virtuales Python
+.venv/
+venv/
+env/
+.env/
+
+# Caché de Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Distribuciones / builds
+dist/
+build/
+*.egg-info/
+*.egg
+
+# pytest / cobertura
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Editores e IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Archivos de entorno (pueden contener secretos)
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+logs/
+
+# Archivos temporales
+*.tmp
+*.bak

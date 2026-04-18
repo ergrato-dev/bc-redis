@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" width="800" height="420" font-family="Inter, Roboto, 'Open Sans', system-ui, sans-serif">
+
+  <!-- Background -->
+  <rect width="800" height="420" fill="#0f0f1a"/>
+
+  <!-- Title -->
+  <text x="400" y="28" text-anchor="middle" fill="#DC382D" font-size="16" font-weight="700">KEYS * vs SCAN — Iteración de Claves en Redis</text>
+  <text x="400" y="46" text-anchor="middle" fill="#666688" font-size="11">Por qué KEYS * está prohibido en producción y SCAN es la alternativa correcta</text>
+
+  <!-- ─── LEFT: KEYS * ─── -->
+  <rect x="20" y="60" width="360" height="330" rx="8" fill="#1a0808" stroke="#993322" stroke-width="1.5"/>
+  <text x="200" y="84" text-anchor="middle" fill="#cc4433" font-size="14" font-weight="700">KEYS *</text>
+  <text x="200" y="101" text-anchor="middle" fill="#884433" font-size="10">❌ NUNCA usar en producción</text>
+
+  <!-- Timeline: single blocking call -->
+  <text x="45" y="125" fill="#888899" font-size="10" font-weight="600">Cliente</text>
+  <text x="270" y="125" fill="#888899" font-size="10" font-weight="600">Redis Server</text>
+
+  <!-- Client line -->
+  <line x1="75" y1="135" x2="75" y2="340" stroke="#555566" stroke-width="1.5"/>
+  <!-- Server line -->
+  <line x1="305" y1="135" x2="305" y2="340" stroke="#555566" stroke-width="1.5"/>
+
+  <!-- Call arrow -->
+  <line x1="75" y1="150" x2="295" y2="150" stroke="#cc4433" stroke-width="2" marker-end="url(#arr-red2)"/>
+  <text x="185" y="145" text-anchor="middle" fill="#cc4433" font-size="10">KEYS *</text>
+
+  <!-- Blocked period (red rectangle on server) -->
+  <rect x="295" y="160" width="20" height="140" rx="3" fill="#cc4433" opacity="0.6"/>
+  <text x="330" y="195" fill="#cc4433" font-size="9">⬛ servidor</text>
+  <text x="330" y="209" fill="#cc4433" font-size="9">bloqueado</text>
+  <text x="330" y="223" fill="#cc4433" font-size="9">—</text>
+  <text x="330" y="237" fill="#cc4433" font-size="9">otros clientes</text>
+  <text x="330" y="251" fill="#cc4433" font-size="9">esperando</text>
+  <text x="330" y="265" fill="#cc4433" font-size="9">—</text>
+  <text x="330" y="279" fill="#cc4433" font-size="9">escanea</text>
+  <text x="330" y="293" fill="#cc4433" font-size="9">TODAS las</text>
+  <text x="330" y="307" fill="#cc4433" font-size="9">claves de</text>
+  <text x="330" y="321" fill="#cc4433" font-size="9">una vez</text>
+
+  <!-- Client waiting indicator -->
+  <rect x="65" y="160" width="20" height="140" rx="3" fill="#663322" opacity="0.6"/>
+
+  <!-- Response arrow -->
+  <line x1="295" y1="300" x2="85" y2="300" stroke="#cc4433" stroke-width="2" marker-end="url(#arr-red3)"/>
+  <text x="185" y="295" text-anchor="middle" fill="#cc4433" font-size="10">ALL 1M keys at once</text>
+
+  <!-- Summary -->
+  <rect x="35" y="315" width="330" height="60" rx="6" fill="#110505" stroke="#553322" stroke-width="1"/>
+  <text x="200" y="332" text-anchor="middle" fill="#cc7766" font-size="10" font-weight="600">Consecuencias</text>
+  <text x="200" y="348" text-anchor="middle" fill="#996655" font-size="9">• O(N) — bloquea el servidor completo</text>
+  <text x="200" y="362" text-anchor="middle" fill="#996655" font-size="9">• Con 1M claves puede tardar segundos</text>
+  <text x="200" y="376" text-anchor="middle" fill="#996655" font-size="9">• Todos los clientes esperan en cola</text>
+
+  <!-- ─── RIGHT: SCAN ─── -->
+  <rect x="420" y="60" width="360" height="330" rx="8" fill="#081808" stroke="#339944" stroke-width="1.5"/>
+  <text x="600" y="84" text-anchor="middle" fill="#44cc66" font-size="14" font-weight="700">SCAN cursor</text>
+  <text x="600" y="101" text-anchor="middle" fill="#336633" font-size="10">✅ Seguro en producción</text>
+
+  <!-- Timeline: multiple non-blocking calls -->
+  <text x="445" y="125" fill="#888899" font-size="10" font-weight="600">Cliente</text>
+  <text x="670" y="125" fill="#888899" font-size="10" font-weight="600">Redis Server</text>
+
+  <!-- Client line -->
+  <line x1="475" y1="135" x2="475" y2="340" stroke="#555566" stroke-width="1.5"/>
+  <!-- Server line -->
+  <line x1="705" y1="135" x2="705" y2="340" stroke="#555566" stroke-width="1.5"/>
+
+  <!-- Call 1 -->
+  <line x1="475" y1="150" x2="695" y2="150" stroke="#44cc66" stroke-width="1.5" marker-end="url(#arr-green)"/>
+  <text x="585" y="145" text-anchor="middle" fill="#44cc66" font-size="9">SCAN 0 COUNT 100</text>
+  <!-- Server processes briefly -->
+  <rect x="695" y="156" width="12" height="14" rx="2" fill="#44cc66" opacity="0.5"/>
+  <!-- Response 1 -->
+  <line x1="695" y1="172" x2="485" y2="172" stroke="#44cc66" stroke-width="1.5" marker-end="url(#arr-green2)"/>
+  <text x="585" y="168" text-anchor="middle" fill="#338844" font-size="9">cursor=847, keys[0..99]</text>
+
+  <!-- Other clients can run between scans (indicator) -->
+  <text x="585" y="186" text-anchor="middle" fill="#226622" font-size="8">← otros clientes pueden ejecutar comandos aquí →</text>
+
+  <!-- Call 2 -->
+  <line x1="475" y1="198" x2="695" y2="198" stroke="#44cc66" stroke-width="1.5" marker-end="url(#arr-green)"/>
+  <text x="585" y="193" text-anchor="middle" fill="#44cc66" font-size="9">SCAN 847 COUNT 100</text>
+  <rect x="695" y="204" width="12" height="14" rx="2" fill="#44cc66" opacity="0.5"/>
+  <line x1="695" y1="220" x2="485" y2="220" stroke="#44cc66" stroke-width="1.5" marker-end="url(#arr-green2)"/>
+  <text x="585" y="216" text-anchor="middle" fill="#338844" font-size="9">cursor=3291, keys[100..199]</text>
+
+  <text x="585" y="234" text-anchor="middle" fill="#226622" font-size="8">← otros clientes pueden ejecutar comandos aquí →</text>
+
+  <!-- Call 3 -->
+  <line x1="475" y1="246" x2="695" y2="246" stroke="#44cc66" stroke-width="1.5" marker-end="url(#arr-green)"/>
+  <text x="585" y="241" text-anchor="middle" fill="#44cc66" font-size="9">SCAN 3291 COUNT 100</text>
+  <rect x="695" y="252" width="12" height="14" rx="2" fill="#44cc66" opacity="0.5"/>
+  <line x1="695" y1="268" x2="485" y2="268" stroke="#44cc66" stroke-width="1.5" marker-end="url(#arr-green2)"/>
+  <text x="585" y="264" text-anchor="middle" fill="#338844" font-size="9">cursor=7104, keys[200..299]</text>
+
+  <text x="585" y="279" text-anchor="middle" fill="#226622" font-size="8">···  N iteraciones más  ···</text>
+
+  <!-- Final call: cursor returns 0 -->
+  <line x1="475" y1="292" x2="695" y2="292" stroke="#44cc66" stroke-width="1.5" marker-end="url(#arr-green)"/>
+  <text x="585" y="287" text-anchor="middle" fill="#44cc66" font-size="9">SCAN N COUNT 100</text>
+  <rect x="695" y="298" width="12" height="14" rx="2" fill="#44cc66" opacity="0.5"/>
+  <line x1="695" y1="314" x2="485" y2="314" stroke="#44cc66" stroke-width="2" marker-end="url(#arr-green2)"/>
+  <text x="585" y="310" text-anchor="middle" fill="#44cc66" font-size="10" font-weight="600">cursor=0 → fin de iteración ✓</text>
+
+  <!-- Summary -->
+  <rect x="435" y="315" width="330" height="60" rx="6" fill="#051005" stroke="#225533" stroke-width="1"/>
+  <text x="600" y="332" text-anchor="middle" fill="#44cc66" font-size="10" font-weight="600">Ventajas</text>
+  <text x="600" y="348" text-anchor="middle" fill="#448855" font-size="9">• O(1) por llamada — no bloquea</text>
+  <text x="600" y="362" text-anchor="middle" fill="#448855" font-size="9">• El servidor responde a otros clientes entre scans</text>
+  <text x="600" y="376" text-anchor="middle" fill="#448855" font-size="9">• Soporta MATCH y COUNT como filtros</text>
+
+  <!-- Defs for markers -->
+  <defs>
+    <marker id="arr-red2" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#cc4433"/>
+    </marker>
+    <marker id="arr-red3" markerWidth="8" markerHeight="8" refX="1" refY="3" orient="auto">
+      <path d="M8,0 L8,6 L0,3 z" fill="#cc4433"/>
+    </marker>
+    <marker id="arr-green" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#44cc66"/>
+    </marker>
+    <marker id="arr-green2" markerWidth="8" markerHeight="8" refX="1" refY="3" orient="auto">
+      <path d="M8,0 L8,6 L0,3 z" fill="#44cc66"/>
+    </marker>
+  </defs>
+</svg>

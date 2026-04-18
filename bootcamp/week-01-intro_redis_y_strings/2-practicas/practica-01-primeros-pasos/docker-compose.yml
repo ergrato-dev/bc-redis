@@ -1,0 +1,24 @@
+services:
+  redis:
+    image: redis:8-alpine
+    container_name: redis-practica-01
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+      - ./starter/seed.sh:/data/seed.sh
+    command: redis-server /usr/local/etc/redis/redis.conf
+    restart: unless-stopped
+
+  redisinsight:
+    image: redis/redisinsight:2.58
+    container_name: redisinsight-practica-01
+    ports:
+      - "5540:5540"
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+volumes:
+  redis_data:

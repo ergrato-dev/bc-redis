@@ -1,0 +1,27 @@
+services:
+  redis:
+    image: redis:8-alpine
+    container_name: redis-proyecto-01
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+    command: redis-server /usr/local/etc/redis/redis.conf
+    restart: unless-stopped
+
+  app:
+    build: .
+    container_name: app-proyecto-01
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=bootcamp2026
+    volumes:
+      - .:/app
+    command: python starter/main.py
+
+volumes:
+  redis_data:

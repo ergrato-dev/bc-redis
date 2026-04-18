@@ -1,0 +1,43 @@
+# ─────────────────────────────────────────────────────────────
+# .dockerignore — 3-proyecto
+# ─────────────────────────────────────────────────────────────
+
+# Documentación (no necesaria en la imagen)
+README.md
+
+# Compose (no es parte de la imagen)
+docker-compose.yml
+
+# Entornos virtuales Python
+.venv/
+venv/
+env/
+.env/
+
+# Caché de Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# pytest / cobertura
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Editores e IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# macOS
+.DS_Store
+
+# Archivos de entorno (pueden contener secretos)
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log

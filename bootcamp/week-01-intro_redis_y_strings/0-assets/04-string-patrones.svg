@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 430" width="800" height="430" font-family="Inter, Roboto, 'Open Sans', system-ui, sans-serif">
+
+  <!-- Background -->
+  <rect width="800" height="430" fill="#0f0f1a"/>
+
+  <!-- Title -->
+  <text x="400" y="28" text-anchor="middle" fill="#DC382D" font-size="16" font-weight="700">Patrones de Uso del String en Producción</text>
+  <text x="400" y="46" text-anchor="middle" fill="#666688" font-size="11">Cuatro casos reales implementables con un solo tipo de dato</text>
+
+  <!-- ─── CARD 1: Cache ─── -->
+  <rect x="20" y="60" width="370" height="170" rx="8" fill="#14142a" stroke="#aa7733" stroke-width="1.5"/>
+  <rect x="20" y="60" width="370" height="34" rx="8" fill="#2a1f0a"/>
+  <rect x="20" y="80" width="370" height="14" fill="#2a1f0a"/>
+  <text x="40" y="82" fill="#aa7733" font-size="12" font-weight="700">① Cache de consultas costosas</text>
+  <text x="390" y="82" text-anchor="end" fill="#664422" font-size="10">SET con EX</text>
+
+  <text x="35" y="110" fill="#888899" font-size="10">Problema: query SQL tarda 200 ms. Con Redis: &lt; 1 ms en cache hit.</text>
+  <rect x="35" y="118" width="340" height="70" rx="5" fill="#0e0e1a"/>
+  <text x="50" y="134" fill="#666688" font-size="9"># Guardar resultado durante 5 minutos</text>
+  <text x="50" y="150" fill="#aaaacc" font-size="10">SET cache:article:42 '{"id":42,"title":"Redis"}' EX 300</text>
+  <text x="50" y="166" fill="#666688" font-size="9"># Obtener (nil si expiró → ir a la DB)</text>
+  <text x="50" y="182" fill="#aaaacc" font-size="10">GET cache:article:42</text>
+  <text x="35" y="207" fill="#666677" font-size="9">Patrón: cache-aside · TTL ajustado a la volatilidad del dato</text>
+  <text x="35" y="220" fill="#666677" font-size="9">Clave: cache:recurso:id  · Valor: JSON serializado</text>
+
+  <!-- ─── CARD 2: Counter ─── -->
+  <rect x="410" y="60" width="370" height="170" rx="8" fill="#14142a" stroke="#3388cc" stroke-width="1.5"/>
+  <rect x="410" y="60" width="370" height="34" rx="8" fill="#0a1a2a"/>
+  <rect x="410" y="80" width="370" height="14" fill="#0a1a2a"/>
+  <text x="430" y="82" fill="#3388cc" font-size="12" font-weight="700">② Contadores atómicos</text>
+  <text x="780" y="82" text-anchor="end" fill="#225577" font-size="10">INCR / INCRBY</text>
+
+  <text x="425" y="110" fill="#888899" font-size="10">Garantía: dos clientes simultáneos nunca producen escritura sucia.</text>
+  <rect x="425" y="118" width="340" height="70" rx="5" fill="#0e0e1a"/>
+  <text x="440" y="134" fill="#666688" font-size="9"># Contar visitas de un artículo (atómico)</text>
+  <text x="440" y="150" fill="#aaaacc" font-size="10">INCR views:article:42</text>
+  <text x="440" y="166" fill="#666688" font-size="9"># Contar requests de una API en la última hora</text>
+  <text x="440" y="182" fill="#aaaacc" font-size="10">INCRBY api:requests:2026041814 1</text>
+  <text x="425" y="207" fill="#666677" font-size="9">INCR es O(1) · sin locks · sin transacciones necesarias</text>
+  <text x="425" y="220" fill="#666677" font-size="9">Clave: métrica:recurso:id   · Valor: entero (encoding: int)</text>
+
+  <!-- ─── CARD 3: Feature Flag ─── -->
+  <rect x="20" y="245" width="370" height="170" rx="8" fill="#14142a" stroke="#7733aa" stroke-width="1.5"/>
+  <rect x="20" y="245" width="370" height="34" rx="8" fill="#1a0a2a"/>
+  <rect x="20" y="265" width="370" height="14" fill="#1a0a2a"/>
+  <text x="40" y="267" fill="#9944cc" font-size="12" font-weight="700">③ Feature flags (interruptor)</text>
+  <text x="390" y="267" text-anchor="end" fill="#552277" font-size="10">SET / GET</text>
+
+  <text x="35" y="295" fill="#888899" font-size="10">Activar/desactivar funcionalidades sin redesplegar código.</text>
+  <rect x="35" y="303" width="340" height="70" rx="5" fill="#0e0e1a"/>
+  <text x="50" y="319" fill="#666688" font-size="9"># Activar nueva UI para todos los usuarios</text>
+  <text x="50" y="335" fill="#aaaacc" font-size="10">SET feature:new_checkout "enabled"</text>
+  <text x="50" y="351" fill="#666688" font-size="9"># Verificar en la aplicación</text>
+  <text x="50" y="367" fill="#aaaacc" font-size="10">GET feature:new_checkout   # → "enabled" / nil</text>
+  <text x="35" y="392" fill="#666677" font-size="9">Sin TTL: el flag vive hasta eliminación explícita (DEL)</text>
+  <text x="35" y="405" fill="#666677" font-size="9">Clave: feature:nombre_feature  · Valor: "enabled" / "disabled"</text>
+
+  <!-- ─── CARD 4: Distributed Lock ─── -->
+  <rect x="410" y="245" width="370" height="170" rx="8" fill="#14142a" stroke="#33aa66" stroke-width="1.5"/>
+  <rect x="410" y="245" width="370" height="34" rx="8" fill="#0a1f14"/>
+  <rect x="410" y="265" width="370" height="14" fill="#0a1f14"/>
+  <text x="430" y="267" fill="#33aa66" font-size="12" font-weight="700">④ Lock distribuido (intro)</text>
+  <text x="780" y="267" text-anchor="end" fill="#1f6644" font-size="10">SET NX PX</text>
+
+  <text x="425" y="295" fill="#888899" font-size="10">Solo un proceso puede adquirir el lock a la vez — en Redis.</text>
+  <rect x="425" y="303" width="340" height="70" rx="5" fill="#0e0e1a"/>
+  <text x="440" y="319" fill="#666688" font-size="9"># Adquirir lock (NX: solo si no existe, PX: TTL en ms)</text>
+  <text x="440" y="335" fill="#aaaacc" font-size="10">SET lock:job:export "worker-3" NX PX 30000</text>
+  <text x="440" y="351" fill="#666688" font-size="9"># → OK si adquirido, nil si ya existe</text>
+  <text x="440" y="367" fill="#aaaacc" font-size="10">DEL lock:job:export   # liberar al terminar</text>
+  <text x="425" y="392" fill="#666677" font-size="9">NX + PX en un solo comando = operación atómica</text>
+  <text x="425" y="405" fill="#666677" font-size="9">TTL evita locks huérfanos si el proceso muere</text>
+</svg>

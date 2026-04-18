@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" width="800" height="420" font-family="Inter, Roboto, 'Open Sans', system-ui, sans-serif">
+  <defs>
+    <marker id="arr-red" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#DC382D"/>
+    </marker>
+    <marker id="arr-gray" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#555577"/>
+    </marker>
+    <marker id="arr-gray-down" markerWidth="8" markerHeight="8" refX="3" refY="7" orient="auto">
+      <path d="M0,0 L6,0 L3,8 z" fill="#555577"/>
+    </marker>
+    <marker id="arr-red-down" markerWidth="8" markerHeight="8" refX="3" refY="7" orient="auto">
+      <path d="M0,0 L6,0 L3,8 z" fill="#DC382D"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="420" fill="#0f0f1a"/>
+
+  <!-- Title -->
+  <text x="400" y="30" text-anchor="middle" fill="#DC382D" font-size="16" font-weight="700">Arquitectura Interna de Redis</text>
+  <text x="400" y="48" text-anchor="middle" fill="#666688" font-size="11">Single-threaded · I/O multiplexing · Atomicidad garantizada</text>
+
+  <!-- ── CLIENTS ── -->
+  <rect x="20" y="65" width="110" height="230" rx="8" fill="#14142a" stroke="#333355" stroke-width="1.5"/>
+  <text x="75" y="83" text-anchor="middle" fill="#9999bb" font-size="10" font-weight="600" letter-spacing="1">CLIENTES</text>
+  <rect x="32" y="90" width="86" height="22" rx="4" fill="#1e1e38" stroke="#444466"/>
+  <text x="75" y="105" text-anchor="middle" fill="#aaaacc" font-size="10">redis-cli</text>
+  <rect x="32" y="118" width="86" height="22" rx="4" fill="#1e1e38" stroke="#444466"/>
+  <text x="75" y="133" text-anchor="middle" fill="#aaaacc" font-size="10">redis-py</text>
+  <rect x="32" y="146" width="86" height="22" rx="4" fill="#1e1e38" stroke="#444466"/>
+  <text x="75" y="161" text-anchor="middle" fill="#aaaacc" font-size="10">Node.js</text>
+  <rect x="32" y="174" width="86" height="22" rx="4" fill="#1e1e38" stroke="#444466"/>
+  <text x="75" y="189" text-anchor="middle" fill="#aaaacc" font-size="10">Go / Java</text>
+  <rect x="32" y="202" width="86" height="22" rx="4" fill="#1e1e38" stroke="#444466"/>
+  <text x="75" y="217" text-anchor="middle" fill="#aaaacc" font-size="10">Ruby / PHP</text>
+  <rect x="32" y="230" width="86" height="22" rx="4" fill="#1e1e38" stroke="#444466"/>
+  <text x="75" y="245" text-anchor="middle" fill="#aaaacc" font-size="10">REST APIs</text>
+  <text x="75" y="268" text-anchor="middle" fill="#666677" font-size="9">TCP/IP · RESP3</text>
+
+  <!-- Arrow clients → event loop -->
+  <line x1="130" y1="180" x2="158" y2="180" stroke="#DC382D" stroke-width="2" marker-end="url(#arr-red)"/>
+
+  <!-- ── EVENT LOOP ── -->
+  <rect x="160" y="120" width="140" height="120" rx="8" fill="#14142a" stroke="#DC382D" stroke-width="2"/>
+  <text x="230" y="142" text-anchor="middle" fill="#DC382D" font-size="11" font-weight="700">EVENT LOOP</text>
+  <text x="230" y="160" text-anchor="middle" fill="#888899" font-size="10">I/O multiplexing</text>
+  <text x="230" y="176" text-anchor="middle" fill="#888899" font-size="10">epoll (Linux)</text>
+  <text x="230" y="192" text-anchor="middle" fill="#888899" font-size="10">kqueue (macOS)</text>
+  <line x1="175" y1="205" x2="285" y2="205" stroke="#333344" stroke-width="1"/>
+  <text x="230" y="220" text-anchor="middle" fill="#aaaacc" font-size="10">Miles de conexiones</text>
+  <text x="230" y="232" text-anchor="middle" fill="#aaaacc" font-size="10">con 1 solo hilo</text>
+
+  <!-- Arrow event loop → command queue -->
+  <line x1="300" y1="180" x2="328" y2="180" stroke="#DC382D" stroke-width="2" marker-end="url(#arr-red)"/>
+
+  <!-- ── COMMAND QUEUE ── -->
+  <rect x="330" y="135" width="130" height="90" rx="8" fill="#14142a" stroke="#444466" stroke-width="1.5"/>
+  <text x="395" y="155" text-anchor="middle" fill="#ccccdd" font-size="11" font-weight="600">COMMAND QUEUE</text>
+  <text x="395" y="173" text-anchor="middle" fill="#888899" font-size="9">procesados en orden</text>
+  <text x="395" y="190" text-anchor="middle" fill="#aaaacc" font-size="10">SET user:1 "Alice"</text>
+  <text x="395" y="205" text-anchor="middle" fill="#aaaacc" font-size="10">INCR views:article:5</text>
+  <text x="395" y="220" text-anchor="middle" fill="#666677" font-size="9">GET session:42 ···</text>
+
+  <!-- Arrow command queue → execution engine -->
+  <line x1="460" y1="180" x2="488" y2="180" stroke="#DC382D" stroke-width="2" marker-end="url(#arr-red)"/>
+
+  <!-- ── EXECUTION ENGINE ── -->
+  <rect x="490" y="115" width="155" height="130" rx="8" fill="#14142a" stroke="#444466" stroke-width="1.5"/>
+  <text x="567" y="137" text-anchor="middle" fill="#ccccdd" font-size="11" font-weight="600">EXECUTION ENGINE</text>
+  <line x1="505" y1="145" x2="630" y2="145" stroke="#333344" stroke-width="1"/>
+  <text x="567" y="162" text-anchor="middle" fill="#888899" font-size="9">1 comando a la vez</text>
+  <text x="567" y="180" text-anchor="middle" fill="#aaaacc" font-size="10">✓ Atomicidad garantizada</text>
+  <text x="567" y="197" text-anchor="middle" fill="#aaaacc" font-size="10">✓ Sin race conditions</text>
+  <text x="567" y="214" text-anchor="middle" fill="#aaaacc" font-size="10">✓ Sin deadlocks</text>
+  <text x="567" y="231" text-anchor="middle" fill="#888899" font-size="9">Sin SQL · Sin query planner</text>
+
+  <!-- Arrow execution engine → in-memory store (down) -->
+  <line x1="567" y1="245" x2="567" y2="268" stroke="#DC382D" stroke-width="2" marker-end="url(#arr-red-down)"/>
+
+  <!-- ── IN-MEMORY STORE ── -->
+  <rect x="450" y="270" width="235" height="80" rx="8" fill="#1c0a0a" stroke="#DC382D" stroke-width="2"/>
+  <text x="567" y="292" text-anchor="middle" fill="#DC382D" font-size="12" font-weight="700">IN-MEMORY STORE</text>
+  <text x="567" y="310" text-anchor="middle" fill="#888899" font-size="9">RAM · latencia &lt; 1 ms · hasta 1M ops/seg</text>
+  <text x="567" y="328" text-anchor="middle" fill="#ccccdd" font-size="10">Strings · Lists · Sets · Hashes</text>
+  <text x="567" y="343" text-anchor="middle" fill="#ccccdd" font-size="10">Sorted Sets · Streams</text>
+
+  <!-- Arrow in-memory store → persistence (dashed) -->
+  <line x1="567" y1="350" x2="567" y2="378" stroke="#444455" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-gray-down)"/>
+
+  <!-- ── PERSISTENCE ── -->
+  <rect x="450" y="380" width="235" height="26" rx="5" fill="#111118" stroke="#333344" stroke-width="1"/>
+  <text x="567" y="397" text-anchor="middle" fill="#555566" font-size="9">Persistencia en background: RDB / AOF → Disco</text>
+
+  <!-- ── Legend ── -->
+  <line x1="20" y1="408" x2="40" y2="408" stroke="#DC382D" stroke-width="2"/>
+  <text x="46" y="412" fill="#666677" font-size="9">flujo principal (bloqueante para el cliente, nunca para otros)</text>
+  <line x1="400" y1="408" x2="420" y2="408" stroke="#444455" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="426" y="412" fill="#666677" font-size="9">operación en background (no bloquea el event loop)</text>
+</svg>

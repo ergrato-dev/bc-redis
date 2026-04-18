@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" width="800" height="400" font-family="Inter, Roboto, 'Open Sans', system-ui, sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#DC382D"/>
+    </marker>
+    <marker id="arr-b" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#4488cc"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="400" fill="#0f0f1a"/>
+
+  <!-- Title -->
+  <text x="400" y="28" text-anchor="middle" fill="#DC382D" font-size="16" font-weight="700">Entorno de Desarrollo con Docker Compose</text>
+  <text x="400" y="46" text-anchor="middle" fill="#666688" font-size="11">Semana 01 — tres servicios en la misma red Docker</text>
+
+  <!-- ── HOST MACHINE border ── -->
+  <rect x="15" y="58" width="770" height="310" rx="10" fill="none" stroke="#333355" stroke-width="1.5" stroke-dasharray="6,3"/>
+  <text x="30" y="52" fill="#444466" font-size="10">Máquina Host</text>
+
+  <!-- ── DOCKER NETWORK border ── -->
+  <rect x="35" y="72" width="730" height="260" rx="8" fill="#12122a" stroke="#2244aa" stroke-width="1.5"/>
+  <text x="55" y="88" fill="#4466aa" font-size="10" font-weight="600">docker compose · red interna: bootcamp-net</text>
+
+  <!-- ─── SERVICE: redis ─── -->
+  <rect x="55" y="100" width="195" height="195" rx="8" fill="#1a1a30" stroke="#DC382D" stroke-width="2"/>
+  <!-- Icon area -->
+  <circle cx="152" cy="130" r="18" fill="#DC382D" opacity="0.15"/>
+  <text x="152" y="135" text-anchor="middle" fill="#DC382D" font-size="18">⬡</text>
+  <text x="152" y="157" text-anchor="middle" fill="#DC382D" font-size="12" font-weight="700">redis</text>
+  <text x="152" y="172" text-anchor="middle" fill="#666688" font-size="10">redis:8-alpine</text>
+  <line x1="70" y1="180" x2="235" y2="180" stroke="#222244" stroke-width="1"/>
+  <text x="152" y="196" text-anchor="middle" fill="#888899" font-size="9">puerto interno: 6379</text>
+  <text x="152" y="213" text-anchor="middle" fill="#aaaacc" font-size="10">requirepass bootcamp2026</text>
+  <text x="152" y="229" text-anchor="middle" fill="#888899" font-size="9">maxmemory 256mb</text>
+  <text x="152" y="245" text-anchor="middle" fill="#888899" font-size="9">volumen: redis_data:/data</text>
+  <text x="152" y="261" text-anchor="middle" fill="#888899" font-size="9">config: redis.conf</text>
+  <text x="152" y="278" text-anchor="middle" fill="#555566" font-size="9">hostname: redis</text>
+
+  <!-- ─── SERVICE: app ─── -->
+  <rect x="302" y="100" width="195" height="195" rx="8" fill="#1a1a30" stroke="#44aa88" stroke-width="1.5"/>
+  <circle cx="399" cy="130" r="18" fill="#44aa88" opacity="0.15"/>
+  <text x="399" y="137" text-anchor="middle" fill="#44aa88" font-size="20">🐍</text>
+  <text x="399" y="157" text-anchor="middle" fill="#44aa88" font-size="12" font-weight="700">app</text>
+  <text x="399" y="172" text-anchor="middle" fill="#666688" font-size="10">python:3.12-slim</text>
+  <line x1="317" y1="180" x2="482" y2="180" stroke="#222244" stroke-width="1"/>
+  <text x="399" y="196" text-anchor="middle" fill="#888899" font-size="9">sin puertos expuestos</text>
+  <text x="399" y="213" text-anchor="middle" fill="#aaaacc" font-size="10">redis-py 5.2.1</text>
+  <text x="399" y="229" text-anchor="middle" fill="#888899" font-size="9">REDIS_HOST=redis</text>
+  <text x="399" y="245" text-anchor="middle" fill="#888899" font-size="9">REDIS_PORT=6379</text>
+  <text x="399" y="261" text-anchor="middle" fill="#888899" font-size="9">código montado: .:/app</text>
+  <text x="399" y="278" text-anchor="middle" fill="#555566" font-size="9">depends_on: redis</text>
+
+  <!-- ─── SERVICE: redisinsight ─── -->
+  <rect x="549" y="100" width="195" height="195" rx="8" fill="#1a1a30" stroke="#4488cc" stroke-width="1.5"/>
+  <circle cx="646" cy="130" r="18" fill="#4488cc" opacity="0.15"/>
+  <text x="646" y="137" text-anchor="middle" fill="#4488cc" font-size="18">◈</text>
+  <text x="646" y="157" text-anchor="middle" fill="#4488cc" font-size="12" font-weight="700">redisinsight</text>
+  <text x="646" y="172" text-anchor="middle" fill="#666688" font-size="10">redis/redisinsight:2.58</text>
+  <line x1="564" y1="180" x2="729" y2="180" stroke="#222244" stroke-width="1"/>
+  <text x="646" y="196" text-anchor="middle" fill="#888899" font-size="9">puerto interno: 5540</text>
+  <text x="646" y="213" text-anchor="middle" fill="#aaaacc" font-size="10">GUI web · explorar claves</text>
+  <text x="646" y="229" text-anchor="middle" fill="#888899" font-size="9">CLI con autocompletado</text>
+  <text x="646" y="245" text-anchor="middle" fill="#888899" font-size="9">Profiler · Memory Analyzer</text>
+  <text x="646" y="261" text-anchor="middle" fill="#888899" font-size="9">conectar con host: redis</text>
+  <text x="646" y="278" text-anchor="middle" fill="#555566" font-size="9">depends_on: redis</text>
+
+  <!-- Arrow app → redis -->
+  <line x1="302" y1="180" x2="250" y2="180" stroke="#DC382D" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="276" y="173" text-anchor="middle" fill="#888899" font-size="9">redis-py</text>
+  <text x="276" y="184" text-anchor="middle" fill="#888899" font-size="9">:6379</text>
+
+  <!-- Arrow redisinsight → redis -->
+  <line x1="549" y1="180" x2="497" y2="180" stroke="#4488cc" stroke-width="2" marker-end="url(#arr-b)"/>
+  <text x="523" y="173" text-anchor="middle" fill="#888899" font-size="9">GUI →</text>
+  <text x="523" y="184" text-anchor="middle" fill="#888899" font-size="9">:6379</text>
+
+  <!-- ── PORT MAPPINGS (outside Docker network, inside host) ── -->
+  <!-- Redis port mapping -->
+  <rect x="55" y="335" width="195" height="22" rx="4" fill="#110a0a" stroke="#553333" stroke-width="1"/>
+  <text x="152" y="350" text-anchor="middle" fill="#886655" font-size="10">host:6379 → redis:6379</text>
+
+  <!-- RedisInsight port mapping -->
+  <rect x="549" y="335" width="195" height="22" rx="4" fill="#0a0a18" stroke="#334466" stroke-width="1"/>
+  <text x="646" y="350" text-anchor="middle" fill="#5566aa" font-size="10">host:5540 → redisinsight:5540</text>
+
+  <!-- Dashed lines connecting service to port label -->
+  <line x1="152" y1="295" x2="152" y2="334" stroke="#553333" stroke-width="1" stroke-dasharray="4,2"/>
+  <line x1="646" y1="295" x2="646" y2="334" stroke="#334466" stroke-width="1" stroke-dasharray="4,2"/>
+
+  <!-- External access labels -->
+  <text x="152" y="374" text-anchor="middle" fill="#664444" font-size="9">accesible desde redis-cli local</text>
+  <text x="646" y="374" text-anchor="middle" fill="#445566" font-size="9">http://localhost:5540</text>
+
+  <!-- No port for app label -->
+  <text x="399" y="352" text-anchor="middle" fill="#444455" font-size="9">sin acceso externo</text>
+</svg>

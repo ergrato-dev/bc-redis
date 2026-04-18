@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 200">
+
+  <!-- Background -->
+  <rect width="900" height="200" fill="#0d1117"/>
+
+  <!-- Left accent bar -->
+  <rect x="0" y="0" width="6" height="200" fill="#DC382D"/>
+
+  <!-- Right accent bar -->
+  <rect x="894" y="0" width="6" height="200" fill="#DC382D"/>
+
+  <!-- Top rule -->
+  <rect x="40" y="22" width="820" height="1" fill="#DC382D" opacity="0.4"/>
+
+  <!-- Bottom rule -->
+  <rect x="40" y="177" width="820" height="1" fill="#DC382D" opacity="0.4"/>
+
+  <!-- Corner brackets — top left -->
+  <polyline points="40,34 40,22 52,22" stroke="#DC382D" stroke-width="2" fill="none"/>
+  <!-- Corner brackets — top right -->
+  <polyline points="860,34 860,22 848,22" stroke="#DC382D" stroke-width="2" fill="none"/>
+  <!-- Corner brackets — bottom left -->
+  <polyline points="40,166 40,178 52,178" stroke="#DC382D" stroke-width="2" fill="none"/>
+  <!-- Corner brackets — bottom right -->
+  <polyline points="860,166 860,178 848,178" stroke="#DC382D" stroke-width="2" fill="none"/>
+
+  <!-- Redis logo mark: concentric ring segments in brand colors -->
+  <g transform="translate(76, 100)">
+    <!-- Outer ring arc — red -->
+    <path d="M0,-52 A52,52 0 0,1 52,0" stroke="#DC382D" stroke-width="8" fill="none" stroke-linecap="round"/>
+    <!-- Outer ring arc — white -->
+    <path d="M52,0 A52,52 0 0,1 0,52" stroke="#ffffff" stroke-width="8" fill="none" stroke-linecap="round"/>
+    <!-- Outer ring arc — dark-muted -->
+    <path d="M0,52 A52,52 0 0,1 -52,0" stroke="#3d3d3d" stroke-width="8" fill="none" stroke-linecap="round"/>
+    <!-- Outer ring arc — red muted -->
+    <path d="M-52,0 A52,52 0 0,1 0,-52" stroke="#7a1c18" stroke-width="8" fill="none" stroke-linecap="round"/>
+
+    <!-- Inner ring arc — red -->
+    <path d="M0,-34 A34,34 0 0,1 34,0" stroke="#DC382D" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.7"/>
+    <!-- Inner ring arc — white -->
+    <path d="M34,0 A34,34 0 0,1 0,34" stroke="#ffffff" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.5"/>
+    <!-- Inner ring arcs — dark -->
+    <path d="M0,34 A34,34 0 0,1 -34,0" stroke="#2a2a2a" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <path d="M-34,0 A34,34 0 0,1 0,-34" stroke="#5a1714" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.7"/>
+
+    <!-- Center dot -->
+    <circle cx="0" cy="0" r="8" fill="#DC382D"/>
+    <circle cx="0" cy="0" r="4" fill="#0d1117"/>
+  </g>
+
+  <!-- Divider line between icon and text -->
+  <rect x="156" y="44" width="1" height="112" fill="#2a2a2a"/>
+
+  <!-- Main title -->
+  <text x="178" y="84" font-family="Inter, Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="44" font-weight="800" fill="#ffffff" letter-spacing="-0.5">Bootcamp Redis</text>
+
+  <!-- Tagline -->
+  <text x="180" y="118" font-family="Inter, Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="400" fill="#DC382D" letter-spacing="1">Zero  to  Hero</text>
+
+  <!-- Description line -->
+  <text x="180" y="152" font-family="Inter, Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="300" fill="#6e7681">From fundamentals to Redis Engineer · 12 weeks · ~96 hours</text>
+
+  <!-- Right side — badge cluster -->
+  <!-- Redis badge -->
+  <g transform="translate(628, 54)">
+    <rect width="88" height="26" rx="5" fill="#DC382D"/>
+    <text x="44" y="17" font-family="Inter, Roboto, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">Redis 8.x</text>
+  </g>
+
+  <!-- Python badge -->
+  <g transform="translate(724, 54)">
+    <rect width="110" height="26" rx="5" fill="#1e3a5f"/>
+    <text x="55" y="17" font-family="Inter, Roboto, sans-serif" font-size="12" font-weight="700" fill="#4da6ff" text-anchor="middle">Python 3.13</text>
+  </g>
+
+  <!-- Docker badge -->
+  <g transform="translate(628, 88)">
+    <rect width="88" height="26" rx="5" fill="#1a2f45"/>
+    <text x="44" y="17" font-family="Inter, Roboto, sans-serif" font-size="12" font-weight="700" fill="#2496ED" text-anchor="middle">Docker</text>
+  </g>
+
+  <!-- 12 weeks badge -->
+  <g transform="translate(724, 88)">
+    <rect width="110" height="26" rx="5" fill="#1a2a1a"/>
+    <text x="55" y="17" font-family="Inter, Roboto, sans-serif" font-size="12" font-weight="700" fill="#3fb950" text-anchor="middle">12 Weeks</text>
+  </g>
+
+  <!-- Code snippet decorative -->
+  <g transform="translate(630, 126)" opacity="0.55">
+    <text font-family="'JetBrains Mono', 'Fira Code', Consolas, monospace" font-size="11" fill="#6e7681">
+      <tspan x="0" dy="0" fill="#DC382D">SET</tspan>
+      <tspan fill="#c9d1d9"> session:user:42 </tspan>
+    </text>
+    <text font-family="'JetBrains Mono', 'Fira Code', Consolas, monospace" font-size="11" fill="#6e7681">
+      <tspan x="0" dy="16" fill="#DC382D">ZADD</tspan>
+      <tspan fill="#c9d1d9"> leaderboard:global</tspan>
+    </text>
+    <text font-family="'JetBrains Mono', 'Fira Code', Consolas, monospace" font-size="11" fill="#6e7681">
+      <tspan x="0" dy="16" fill="#DC382D">XADD</tspan>
+      <tspan fill="#c9d1d9"> events:stream * ...</tspan>
+    </text>
+  </g>
+
+</svg>
